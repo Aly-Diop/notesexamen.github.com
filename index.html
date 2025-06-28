@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plateforme Notes Étudiants</title>
+  <!-- Google Fonts : Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAEt-Acxu1b_tFB4GRxIoUC39JixfaDm_WGg&s" alt="Logo Université" class="logo" />
+      <h1>Plateforme de Consultation des Notes</h1>
+    </div>
+
+    <div class="menu-toggle" id="menu-toggle" aria-label="Menu navigation" role="button" tabindex="0">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <nav id="nav-menu" role="navigation" aria-label="Menu principal">
+      <a href="#accueil" data-target="accueil">Accueil</a>
+      <a href="#connexion" data-target="connexion">Connexion</a>
+      <a href="#consulter" data-target="consulter">Consulter une note</a>
+      <a href="#toutes_notes" data-target="toutes_notes">Voir toutes les notes</a>
+      <a href="#admin" data-target="admin">Admin</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="accueil" class="active" tabindex="0" aria-label="Section Accueil">
+      <h2><span class="icon" aria-hidden="true">🎓</span> Bienvenue</h2>
+      <p>Cette plateforme permet aux étudiants de consulter leurs notes d'examen et aux administrateurs de publier les résultats.</p>
+    </section>
+
+    <section id="connexion" aria-label="Section Connexion">
+      <h2>Connexion</h2>
+      <form action="docs.php" method="post">
+        <input type="hidden" name="action" value="login">
+        <label for="type">Type d'utilisateur :</label>
+        <select name="type" id="type">
+          <option value="etudiant">Étudiant</option>
+          <option value="admin">Administrateur</option>
+        </select><br>
+        <label for="matricule">Matricule :</label>
+        <input type="text" name="matricule" required><br>
+        <label for="mdp">Mot de passe :</label>
+        <input type="password" name="mdp" required><br>
+        <input type="submit" value="Se connecter">
+      </form>
+    </section>
+
+    <section id="consulter" aria-label="Section Consulter une note">
+      <h2>Consulter une note</h2>
+      <form action="docs.php" method="post">
+        <input type="hidden" name="action" value="voir_note">
+        <label for="matricule_note">Matricule :</label>
+        <input type="text" name="matricule" required><br>
+        <label for="matiere">Code matière :</label>
+        <input type="text" name="matiere" required><br>
+        <input type="submit" value="Voir la note">
+      </form>
+    </section>
+
+    <section id="toutes_notes" aria-label="Section Voir toutes les notes">
+      <h2>Voir toutes les notes</h2>
+      <form action="docs.php" method="post">
+        <input type="hidden" name="action" value="voir_toutes_notes">
+        <label for="matricule_tout">Matricule :</label>
+        <input type="text" name="matricule" required><br>
+        <input type="submit" value="Voir toutes les notes">
+      </form>
+    </section>
+
+    <section id="admin" aria-label="Section Admin">
+      <h2>Admin</h2>
+
+      <h3>Ajouter une note</h3>
+      <form action="docs.php" method="post">
+        <input type="hidden" name="action" value="ajouter_note">
+        <label for="matricule">Matricule étudiant :</label>
+        <input type="text" name="matricule" required><br>
+        <label for="code_matiere">Code matière :</label>
+        <input type="text" name="code_matiere" required><br>
+        <label for="note">Note :</label>
+        <input type="number" name="note" step="0.01" required><br>
+        <input type="submit" value="Enregistrer">
+      </form>
+
+      <h3>Ajouter un étudiant</h3>
+      <form action="docs.php" method="post">
+        <input type="hidden" name="action" value="ajouter_etudiant">
+        <label>Matricule :</label><input type="text" name="matricule" required><br>
+        <label>Nom :</label><input type="text" name="nom" required><br>
+        <label>Prénom :</label><input type="text" name="prenom" required><br>
+        <label>Adresse :</label><input type="text" name="adresse" required><br>
+        <label>Téléphone :</label><input type="text" name="tel" required><br>
+        <label>Formation ID :</label><input type="number" name="formation_id" required><br>
+        <input type="submit" value="Ajouter">
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Université Numérique du Sénégal/UNCHK.ZIG</p>
+    <nav aria-label="Liens utiles">
+      <a href="#contact">Contact</a>
+      <a href="#mentions">Mentions légales</a>
+    </nav>
+  </footer>
+
+  <script>
+    // Menu hamburger responsive
+    const menuToggle = document.getElementById('menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Navigation onglets
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = link.getAttribute('data-target');
+        document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
+        document.getElementById(target).classList.add('active');
+        navMenu.classList.remove('active'); // fermer menu mobile après clic
+      });
+    });
+  </script>
+</body>
+</html>
